@@ -10,7 +10,7 @@ float molmasse;
 float talvaerdi;
 float volume = 0;
 
-FloatList inventar = new FloatList();
+FloatList inventar = new FloatList();//Laver en liste af float værdier, som kan havde komma i dem. (fx 9.82)
 FloatList Symbolatomhusker = new FloatList();
 
 StringList Rawdata = new StringList();
@@ -36,6 +36,10 @@ void setup() {//Denne void kører en gang, fra starten af.
   cp5.addButton("VOLUME")//Tilføjer en knap med Størrelse og position.
     .setPosition(545, 113)
     .setSize(183, 35)
+    ;
+      cp5.addButton("RESTART")//Tilføjer en knap med Størrelse og position.
+    .setPosition(20, 20)
+    .setSize(93, 25)
     ;
   cp5.addButton("masse")
     .setPosition(750, 113)
@@ -81,7 +85,7 @@ void draw() {//dette er en konstant void, som kører 60 gange i sekunder. Medmin
   
   text("Dit indtastede volume:"+massevolume+"L",540,448);
   text("Koncentration:",145,448);
-  float koncvaerdi =massedata/molmasse;
+  float koncvaerdi =massedata/molmasse;//Beregner koncentration.
   text(koncvaerdi/volume+"mol/L",303,448);
   
           
@@ -92,9 +96,9 @@ void draw() {//dette er en konstant void, som kører 60 gange i sekunder. Medmin
     molmasse=molmasse+Symbolatomhusker.get(k);//Opdatere molmassen med nye indskrevet Symbolatomer.
   }
   print="";
-  for (int l=0; l < Rawdata.size(); l++) {
+  for (int l=0; l < Rawdata.size(); l++) {//her er et foorloop der checker størrelsen af listen Rawdata og kan derfor updatere programmet hvis listen bliver større.
     Rawdata.get(l);
-    print=print+Rawdata.get(l);
+    print=print+Rawdata.get(l);//gør så print bliver en ny værdi.
   
           }
 }
@@ -109,8 +113,28 @@ background(226,189,57);
   cp5.get(Textfield.class, "Textfelttal").clear();
   taeller=-2;
 }
+void RESTART() {
+  clear();
+    cp5.get(Textfield.class, "Textfelt").clear();
+  cp5.get(Textfield.class, "Textfelttal").clear();
+  taeller=-2;
+  tal="";//Herunder bliver alle værdierne og listene resetet hvis man trykket på restart knappen.
+tekst="";
+print="";
+massevaerdi="";
+massevolume="";
 
+massedata = 0;
+atommertalhusk =0;
+molmasse=0;
+talvaerdi=0;
+volume = 0;
+inventar = new FloatList();
+Symbolatomhusker = new FloatList();
 
+Rawdata = new StringList();
+Vaerdiliste = new StringList();
+}
 void VOLUME() {
   background(221,92,92);  
   massevolume=cp5.get(Textfield.class, "Textfelt").getText();
@@ -140,16 +164,13 @@ background(252, 150, 107);
          
             break;
        
-            
-
-          
-           
+   
       }
     }
   }
   }
-  Symbolatomhusker.append(atommertalhusk*talvaerdi);
-  cp5.get(Textfield.class, "Textfelt").clear();
+  Symbolatomhusker.append(atommertalhusk*talvaerdi);//her husker den atomets masse gange tallet, og putter det i listen.
+  cp5.get(Textfield.class, "Textfelt").clear();//rydder tekstfelterne
   cp5.get(Textfield.class, "Textfelttal").clear();
-  taeller=-2;
+  taeller=-2;//gør denne værdi tilbage til normal så den kan genkende igen.
 }
